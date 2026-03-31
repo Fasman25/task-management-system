@@ -18,40 +18,40 @@ def display_menu():
 def main():
     while True:
         display_menu()
-        choice = input("Enter your choice: ")
+
+        try:
+            choice = input("Enter your choice: ")
+        except EOFError:
+            break   # ✅ prevents crash
 
         if choice == "1":
-            title = input("Enter task title: ")
-            description = input("Enter task description: ")
-            due_date = input("Enter task due date (YYYY-MM-DD): ")
+            try:
+                title = input("Enter task title: ")
+                description = input("Enter task description: ")
+                due_date = input("Enter task due date (YYYY-MM-DD): ")
+            except EOFError:
+                break
 
             print(add_task(title, description, due_date))
 
         elif choice == "2":
             pending = view_pending_tasks()
-            if not pending:
+
+            if len(pending) == 0:
                 print("No pending tasks.")
             else:
-                for i, task in enumerate(pending):
-                    print(f"{i+1}. {task['title']}")
+                for i in range(len(pending)):
+                    print(f"{i+1}. {pending[i]['title']}")
 
         elif choice == "3":
-            pending = view_pending_tasks()
-
-            if not pending:
-                print("No pending tasks to mark as complete.")
-            else:
-                for i, task in enumerate(pending):
-                    print(f"{i+1}. {task['title']}")
-
-                try:
-                    index = int(input("Enter task number: ")) - 1
-                    print(mark_task_as_complete(index))
-                except ValueError:
-                    print("Invalid input.")
+            try:
+                index = int(input("Enter task number: ")) - 1
+                print(mark_task_as_complete(index))
+            except:
+                print("Invalid input.")
 
         elif choice == "4":
-            print(calculate_progress(tasks))   # ✅ PASS list
+            print(calculate_progress(tasks))
 
         elif choice == "5":
             print("Exiting program...")

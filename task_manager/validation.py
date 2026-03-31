@@ -2,16 +2,16 @@
 import datetime
 
 def validate_task_title(title):
-    if not title.strip():
+    if len(title) == 0:
         return False, "Title cannot be empty."
-    if len(title.strip()) > 50:
+    if len(title) > 50:
         return False, "Title too long."
     return True, ""
 
 def validate_task_description(description):
-    if not description.strip():
+    if len(description) == 0:
         return False, "Description cannot be empty."
-    if len(description.strip()) > 200:
+    if len(description) > 200:
         return False, "Description too long."
     return True, ""
 
