@@ -10,8 +10,8 @@ from task_manager.task_utils import (
 def display_menu():
     print("\n--- Task Management System ---")
     print("1. Add Task")
-    print("2. View Pending Tasks")
-    print("3. Mark Task as Complete")
+    print("2. Mark Task as Complete")   # ✅ swapped
+    print("3. View Pending Tasks")
     print("4. View Progress")
     print("5. Exit")
 
@@ -22,7 +22,7 @@ def main():
         try:
             choice = input("Enter your choice: ")
         except EOFError:
-            break   # ✅ prevents crash
+            break
 
         if choice == "1":
             try:
@@ -34,7 +34,14 @@ def main():
 
             print(add_task(title, description, due_date))
 
-        elif choice == "2":
+        elif choice == "2":   # ✅ NOW MARK COMPLETE
+            try:
+                index = int(input("Enter task number: ")) - 1
+                print(mark_task_as_complete(index))
+            except:
+                print("Invalid task number.")
+
+        elif choice == "3":   # ✅ NOW VIEW
             pending = view_pending_tasks()
 
             if len(pending) == 0:
@@ -42,13 +49,6 @@ def main():
             else:
                 for i in range(len(pending)):
                     print(f"{i+1}. {pending[i]['title']}")
-
-        elif choice == "3":
-            try:
-                index = int(input("Enter task number: ")) - 1
-                print(mark_task_as_complete(index))
-            except:
-                print("Invalid input.")
 
         elif choice == "4":
             print(calculate_progress(tasks))
