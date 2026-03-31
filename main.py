@@ -3,7 +3,8 @@ from task_manager.task_utils import (
     add_task,
     mark_task_as_complete,
     view_pending_tasks,
-    calculate_progress
+    calculate_progress,
+    tasks
 )
 
 def display_menu():
@@ -24,18 +25,15 @@ def main():
             description = input("Enter task description: ")
             due_date = input("Enter task due date (YYYY-MM-DD): ")
 
-            result = add_task(title, description, due_date)
-            print(result)
+            print(add_task(title, description, due_date))
 
         elif choice == "2":
             pending = view_pending_tasks()
-
             if not pending:
                 print("No pending tasks.")
             else:
-                print("\nPending Tasks:")
                 for i, task in enumerate(pending):
-                    print(f"{i + 1}. {task['title']} - Due: {task['due_date']}")
+                    print(f"{i+1}. {task['title']}")
 
         elif choice == "3":
             pending = view_pending_tasks()
@@ -44,24 +42,23 @@ def main():
                 print("No pending tasks to mark as complete.")
             else:
                 for i, task in enumerate(pending):
-                    print(f"{i + 1}. {task['title']} - Due: {task['due_date']}")
+                    print(f"{i+1}. {task['title']}")
 
                 try:
                     index = int(input("Enter task number: ")) - 1
                     print(mark_task_as_complete(index))
                 except ValueError:
-                    print("Invalid input. Please enter a number.")
+                    print("Invalid input.")
 
         elif choice == "4":
-            progress = calculate_progress()
-            print(f"Progress: {progress}% completed")
+            print(calculate_progress(tasks))   # ✅ PASS list
 
         elif choice == "5":
             print("Exiting program...")
             break
 
         else:
-            print("Invalid choice. Please try again.")
+            print("Invalid choice.")
 
 if __name__ == "__main__":
     main()

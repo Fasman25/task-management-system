@@ -2,24 +2,22 @@
 import datetime
 
 def validate_task_title(title):
-    if not title or not title.strip():
+    if not title.strip():
         return False, "Title cannot be empty."
     if len(title.strip()) > 50:
-        return False, "Title cannot exceed 50 characters."
+        return False, "Title too long."
     return True, ""
 
 def validate_task_description(description):
-    if not description or not description.strip():
+    if not description.strip():
         return False, "Description cannot be empty."
     if len(description.strip()) > 200:
-        return False, "Description cannot exceed 200 characters."
+        return False, "Description too long."
     return True, ""
 
 def validate_due_date(due_date):
     try:
-        due = datetime.datetime.strptime(due_date, "%Y-%m-%d")
-        if due.date() < datetime.datetime.now().date():
-            return False, "Due date cannot be in the past."
+        datetime.datetime.strptime(due_date, "%Y-%m-%d")
         return True, ""
     except ValueError:
-        return False, "Invalid date format. Use YYYY-MM-DD."
+        return False, "Invalid date format."

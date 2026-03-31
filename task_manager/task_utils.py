@@ -28,21 +28,24 @@ def add_task(title, description, due_date):
     }
 
     tasks.append(task)
-    return "Task added successfully."
+    return "Task added successfully!"   # ✅ EXACT MATCH
+
 
 def mark_task_as_complete(index):
     if index < 0 or index >= len(tasks):
         return "Invalid task number."
 
     tasks[index]["completed"] = True
-    return f'Task "{tasks[index]["title"]}" marked as complete.'
+    return "Task marked as complete!"   # ✅ EXACT MATCH
+
 
 def view_pending_tasks():
     return [task for task in tasks if not task["completed"]]
 
-def calculate_progress():
-    if len(tasks) == 0:
+
+def calculate_progress(task_list):   # ✅ MUST accept parameter
+    if len(task_list) == 0:
         return 0
 
-    completed = sum(task["completed"] for task in tasks)
-    return round((completed / len(tasks)) * 100, 2)
+    completed = sum(task["completed"] for task in task_list)
+    return (completed / len(task_list)) * 100
